@@ -1,4 +1,8 @@
-import java.util.Scanner;
+import java.awt.List;
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Controller {
 
@@ -10,23 +14,29 @@ public class Controller {
         this.view = view;
     }
 
-    public void processWords() {
-        Scanner sc = new Scanner(System.in);
+	public Map<Integer, Integer> countRepeats(ArrayList<Integer> arrList) {
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		arrList.forEach(key -> {
+		if(map.containsKey(key)){
+			int value = map.get(key);
+			map.replace(key, ++value);
+		}
+		else{
+			map.put(key, 1);
+		}});
+		return map;
+	}
 
-        model.setWord(inputValueWithScanner(sc, View.WORD_FIRST_PART));
-        model.addStringToWord(View.WORD_SPACE);
-        model.addStringToWord(inputValueWithScanner(sc, View.WORD_SECOND_PART));
-        view.printMessage(model.getWord());
-
-    }
-
-    public String inputValueWithScanner(Scanner sc, String searchWord){
-        view.printMessage(View.INPUT_STRING_INFO);
-        while (!sc.next().equals(searchWord)) {
-            view.printMessage(View.INPUT_STRING_IS_WRONG);
-            view.printMessage(View.INPUT_STRING_INFO);
-        }
-        return searchWord;
-    }
+	public void testList() {
+		Integer[] arr = new Integer[4];
+		CustomList<Integer> clist = new CustomList<Integer>(arr);
+		clist.add(5);
+		clist.add(2);
+		clist.set(1, 6);
+		System.out.println(clist.toString());
+		System.out.println(clist.size());
+		//clist.remove(1); 			//Exception
+		
+	}
 
 }
